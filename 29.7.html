@@ -1,1 +1,233 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задача про взаємодію заряджених кульок</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: { enableMenu: false },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.body.classList.add('mathjax-ready');
+                        if (typeof updateUI === 'function') updateUI();
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: "Cambria Math", "Cambria", "Times New Roman", serif;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 24px;
+            line-height: 1.5;
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+            touch-action: pan-y;
+            overflow-x: hidden;
+        }
 
+        .step {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .step.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .physics-table {
+            display: table;
+            width: 95%;
+            max-width: 1200px;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        .row {
+            display: table-row;
+        }
+
+        .cell {
+            display: table-cell;
+            vertical-align: top;
+            padding: 10px 15px;
+        }
+
+        .header-cell {
+            font-weight: bold;
+            font-size: 24px; 
+            padding-bottom: 20px;
+        }
+
+        .v-line {
+            border-right: 2.5px solid black;
+        }
+
+        .h-line-dano {
+            border-top: 2.5px solid black;
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .nav-arrow.left { left: 5px; }
+        .nav-arrow.right { right: 5px; }
+
+        .answer-container {
+            white-space: nowrap;
+            display: inline-block;
+            font-weight: bold;
+            font-size: 24px;
+            text-align: left; /* Вирівнювання тексту всередині контейнера */
+        }
+        
+        .mjx-chtml {
+            font-size: 100% !important;
+        }
+
+        @media (max-width: 768px) {
+            body { font-size: 18px; }
+            .header-cell { font-size: 18px; }
+            .answer-container { font-size: 18px; }
+            .physics-table { width: 100%; }
+            .cell { padding: 5px 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="prev-btn" class="nav-arrow left"><span class="text-4xl text-gray-600">‹</span></div>
+    <div id="next-btn" class="nav-arrow right"><span class="text-4xl text-gray-600">›</span></div>
+
+    <div id="main-container" class="physics-table">
+        <div class="row">
+            <!-- Колонка 1: Дано -->
+            <div class="cell v-line w-[30%]">
+                <div class="header-cell">Дано:</div>
+                <div class="space-y-6">
+                    <div class="step" id="step-1">$q_1 = -3 \cdot 10^{-9} \, \text{Кл}$</div>
+                    <div class="step" id="step-2">$q_2 = 9 \cdot 10^{-9} \, \text{Кл}$</div>
+                    <div class="step h-line-dano" id="step-3">
+                        $q - ?$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Колонка 2: Розв'язання -->
+            <div class="cell v-line w-[35%]">
+                <div class="header-cell text-center">Розв'язання</div>
+                <div class="flex flex-col items-center space-y-8 mt-4">
+                    <div class="step text-gray-700" id="step-4">Закон збереження заряду:</div>
+                    <div class="step font-bold" id="step-5">$q_1 + q_2 = q_1' + q_2'$</div>
+                    <div class="step text-gray-700" id="step-6">Оскільки кульки однакові:</div>
+                    <div class="step" id="step-7">$q_1' = q_2' = q$</div>
+                    <div class="step text-blue-800 font-bold" id="step-8">
+                        $q = \dfrac{q_1 + q_2}{2}$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Колонка 3: Обчислення -->
+            <div class="cell w-[35%]">
+                <div class="header-cell text-center">&nbsp;</div>
+                <div class="flex flex-col space-y-10 mt-4 items-center">
+                    <div class="step" id="step-9">
+                        $$ [q] = \frac{\text{Кл} + \text{Кл}}{1} = \text{Кл} $$
+                    </div>
+                    <div class="step" id="step-10">
+                        $$ q = \frac{-3 \cdot 10^{-9} + 9 \cdot 10^{-9}}{2} = 3 \cdot 10^{-9} \, (\text{Кл}) $$
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Рядок для Відповіді (вирівнювання по лівому краю) -->
+        <div class="row">
+            <div class="cell" colspan="3">
+                <div class="step mt-20 text-left pl-4" id="step-11">
+                    <div class="answer-container">
+                        Відповідь: 3 нКл
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-4 right-6 text-gray-400 text-xs bg-white/80 p-1 rounded">
+        Крок <span id="step-counter">0</span> / 11
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const totalSteps = 11;
+
+        function updateUI() {
+            for (let i = 1; i <= totalSteps; i++) {
+                const el = document.getElementById(`step-${i}`);
+                if (el) {
+                    if (i <= currentStep) el.classList.add('visible');
+                    else el.classList.remove('visible');
+                }
+            }
+            document.getElementById('step-counter').innerText = currentStep;
+            document.getElementById('prev-btn').style.visibility = currentStep === 0 ? "hidden" : "visible";
+            document.getElementById('next-btn').style.opacity = currentStep === totalSteps ? "0.3" : "1";
+
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise();
+            }
+        }
+
+        const next = () => { if (currentStep < totalSteps) { currentStep++; updateUI(); } };
+        const prev = () => { if (currentStep > 0) { currentStep--; updateUI(); } };
+
+        document.getElementById('next-btn').onclick = next;
+        document.getElementById('prev-btn').onclick = prev;
+
+        let touchstartX = 0;
+        let touchendX = 0;
+        function handleGesture() {
+            if (touchendX < touchstartX - 50) next();
+            if (touchendX > touchstartX + 50) prev();
+        }
+        document.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; });
+        document.addEventListener('touchend', e => { touchendX = e.changedTouches[0].screenX; handleGesture(); });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'ArrowRight' || e.code === 'Space') next();
+            if (e.code === 'ArrowLeft') prev();
+        });
+
+        window.onload = updateUI;
+    </script>
+</body>
+</html>
