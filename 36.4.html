@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вправа № 36 (4) - Smart Board</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: "Cambria Math", "Cambria", "Times New Roman", serif;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 28px;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+            overflow-x: hidden;
+        }
+
+        * { font-style: normal !important; }
+
+        .task-header {
+            width: 95%;
+            max-width: 1400px;
+            margin-bottom: 40px;
+            text-align: left;
+            border-left: 8px solid #3b82f6;
+            padding-left: 25px;
+        }
+
+        .task-title {
+            font-weight: bold;
+            font-size: 36px;
+            margin-bottom: 12px;
+            color: #1e40af;
+        }
+
+        .task-text {
+            font-size: 28px;
+            text-align: justify;
+        }
+
+        .step {
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+            pointer-events: none;
+        }
+
+        .step.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .physics-table {
+            display: table;
+            width: 95%;
+            max-width: 1400px;
+            border-collapse: collapse;
+            margin: 0 auto;
+            table-layout: fixed;
+        }
+
+        .row { display: table-row; }
+
+        .cell {
+            display: table-cell;
+            vertical-align: top;
+            padding: 20px 25px;
+        }
+
+        .header-cell {
+            font-weight: bold;
+            font-size: 32px; 
+            padding-bottom: 20px;
+            height: 60px;
+            color: #1e40af;
+        }
+
+        .v-line { border-right: 3px solid black; }
+
+        .h-line-dano {
+            border-top: 3px solid black;
+            margin-top: 30px;
+            padding-top: 30px;
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+            width: 80px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            z-index: 1000;
+            border-radius: 12px;
+        }
+
+        .nav-arrow:hover {
+            background: rgba(59, 130, 246, 0.2);
+            color: #1e40af;
+        }
+
+        #prev-arrow { left: 20px; }
+        #next-arrow { right: 20px; }
+
+        .answer-box {
+            width: 95%;
+            max-width: 1400px;
+            margin-top: 60px;
+            padding: 30px;
+            font-weight: bold;
+            text-align: left;
+            margin-bottom: 100px;
+            background-color: #f8fafc;
+            font-size: 32px;
+            border-radius: 12px;
+        }
+
+        .formula-list mjx-container {
+            margin: 25px 0 !important;
+            font-size: 1.15em !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ЗАГОЛОВОК ТА ТЕКСТ ЗАДАЧІ -->
+    <div class="task-header">
+        <div class="task-title">Вправа № 36 (4)</div>
+        <div class="task-text">
+            Електричне поле, переміщуючи ділянкою кола заряд 60 Кл, виконує ту саму роботу, що й сила тяжіння під час падіння тіла масою 200 г із висоти 360 м. Чому дорівнює напруга на ділянці?
+        </div>
+    </div>
+
+    <div class="physics-table">
+        <div class="row">
+            <!-- КОЛОНКА 1: ДАНО -->
+            <div class="cell v-line" style="width: 25%;">
+                <div class="header-cell">Дано:</div>
+                <div class="space-y-6">
+                    <div class="step" id="s1">$q = 60 \text{ Кл}$</div>
+                    <div class="step" id="s2">$m = 200 \text{ г}$</div>
+                    <div class="step" id="s3">$h = 360 \text{ м}$</div>
+                    <div class="step" id="s4">$A_{ел} = A_{тяж}$</div>
+                    <div class="h-line-dano step" id="s7">
+                        <div>$U - ?$</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- КОЛОНКА 2: СІ (ЦЕНТРОВАНА) -->
+            <div class="cell v-line text-center" style="width: 15%;">
+                <div class="header-cell">СІ:</div>
+                <div class="space-y-6">
+                    <div class="step" id="s6" style="margin-top: 65px;">$0,2 \text{ кг}$</div>
+                </div>
+            </div>
+
+            <!-- КОЛОНКА 3: РОЗВ'ЯЗАННЯ -->
+            <div class="cell v-line" style="width: 32%;">
+                <div class="header-cell text-center">Розв'язання</div>
+                <div class="formula-list">
+                    <div class="step" id="s8">
+                        $$ A_{ел} = U \cdot q $$
+                    </div>
+                    <div class="step" id="s9">
+                        $$ A_{тяж} = mgh $$
+                    </div>
+                    <div class="step" id="s10">
+                        $$ U \cdot q = mgh $$
+                    </div>
+                    <div class="step" id="s11">
+                        $$ U = \frac{mgh}{q} $$
+                    </div>
+                </div>
+            </div>
+
+            <!-- КОЛОНКА 4: ОБЧИСЛЕННЯ -->
+            <div class="cell" style="width: 28%;">
+                <div class="header-cell"></div>
+                <div class="formula-list">
+                    <div class="step" id="s12">
+                        $$ [U] = \frac{\text{кг} \cdot \frac{\text{Н}}{\text{кг}} \cdot \text{м}}{\text{Кл}} = \frac{\text{Дж}}{\text{Кл}} = \text{В} $$
+                    </div>
+                    <div class="step" id="s13">
+                        $$ U = \frac{0,2 \cdot 10 \cdot 360}{60}=12 \text{ (В)}$$
+                    </div>
+                    <div class="step" id="s14">
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ВІДПОВІДЬ -->
+    <div class="step answer-box" id="s15">
+        Відповідь: $U = 12 \text{ В.}$
+    </div>
+
+    <!-- КНОПКИ НАВІГАЦІЇ -->
+    <div id="prev-arrow" class="nav-arrow" style="visibility: hidden;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </div>
+    <div id="next-arrow" class="nav-arrow">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </div>
+
+    <script>
+        window.onload = function() {
+            let currentStep = 0;
+            const stepsIds = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s11", "s12", "s13", "s14", "s15"];
+            const nextBtn = document.getElementById('next-arrow');
+            const prevBtn = document.getElementById('prev-arrow');
+
+            function updateUI() {
+                stepsIds.forEach((id, index) => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        index < currentStep ? el.classList.add('visible') : el.classList.remove('visible');
+                    }
+                });
+                if (window.MathJax) MathJax.typeset();
+                prevBtn.style.visibility = (currentStep === 0) ? 'hidden' : 'visible';
+                nextBtn.style.visibility = (currentStep === stepsIds.length) ? 'hidden' : 'visible';
+            }
+
+            nextBtn.onclick = () => { if (currentStep < stepsIds.length) { currentStep++; updateUI(); } };
+            prevBtn.onclick = () => { if (currentStep > 0) { currentStep--; updateUI(); } };
+            
+            document.onkeydown = (e) => {
+                if (e.key === "ArrowRight" || e.key === " ") nextBtn.click();
+                else if (e.key === "ArrowLeft") prevBtn.click();
+            };
+            
+            updateUI();
+        };
+    </script>
+</body>
+</html>
