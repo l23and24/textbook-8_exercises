@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вправа № 37 (2) - Smart Board</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: "Cambria Math", "Cambria", "Times New Roman", serif;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 32px; /* Збільшено для дошки */
+            line-height: 1.4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        * { font-style: normal !important; }
+
+        .task-header {
+            width: 98%;
+            max-width: 1600px;
+            margin-bottom: 30px;
+            text-align: left;
+            border-left: 10px solid #3b82f6;
+            padding-left: 30px;
+        }
+
+        .task-title {
+            font-weight: bold;
+            font-size: 42px;
+            margin-bottom: 10px;
+            color: #1e40af;
+        }
+
+        .task-text {
+            font-size: 30px;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+
+        .circuit-image-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .circuit-image {
+            max-width: 650px; /* Збільшено рисунок */
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border: 1px solid #e2e8f0;
+        }
+
+        .step {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none;
+        }
+
+        .step.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .physics-table {
+            display: table;
+            width: 98%;
+            max-width: 1600px;
+            border-collapse: collapse;
+            margin: 10px auto;
+            table-layout: fixed;
+        }
+
+        .row { display: table-row; }
+
+        .cell {
+            display: table-cell;
+            vertical-align: top;
+            padding: 30px 40px;
+        }
+
+        .header-cell {
+            font-weight: bold;
+            font-size: 38px; 
+            padding-bottom: 30px;
+            height: 70px;
+            color: #1e40af;
+        }
+
+        .v-line { border-right: 4px solid #000; }
+
+        .h-line-dano {
+            border-top: 4px solid #000;
+            margin-top: 40px;
+            padding-top: 40px;
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+            width: 100px;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            z-index: 1000;
+            border-radius: 20px;
+        }
+
+        .nav-arrow:hover {
+            background: rgba(59, 130, 246, 0.3);
+            color: #1e40af;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        #prev-arrow { left: 10px; }
+        #next-arrow { right: 10px; }
+
+        .answer-box {
+            width: 98%;
+            max-width: 1600px;
+            margin-top: 50px;
+            padding: 40px;
+            font-weight: bold;
+            text-align: left;
+            margin-bottom: 120px;
+            background-color: #f0f7ff;
+            font-size: 38px;
+            border-radius: 15px;
+            border-left: 10px solid #1e40af;
+        }
+
+        .formula-list mjx-container {
+            margin: 35px 0 !important;
+            font-size: 1.3em !important; /* Екстра-великі формули */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ЗАГОЛОВОК ТА ТЕКСТ ЗАДАЧІ -->
+    <div class="task-header">
+        <div class="task-title">Вправа № 37 (2)</div>
+        <div class="task-text">
+            Користуючись показами приладів, зображених на рисунку, визначте опір електричної лампи.
+        </div>
+        <!-- РИСУНОК ДО ЗАДАЧІ -->
+        <div class="circuit-image-container">
+            <img src="https://lh3.googleusercontent.com/d/15eOT-7TWrF3htjpLG4V_R__yE9MwMaSg" alt="Електричні прилади" class="circuit-image" onerror="this.src='https://via.placeholder.com/650x350?text=%D0%A0%D0%B8%D1%81%D1%83%D0%BD%D0%BE%D0%BA+%D0%BF%D1%80%D0%B8%D0%BB%D0%B0%D0%B4%D1%96%D0%B2'">
+        </div>
+    </div>
+
+    <div class="physics-table">
+        <div class="row">
+            <!-- КОЛОНКА 1: ДАНО -->
+            <div class="cell v-line" style="width: 25%;">
+                <div class="header-cell">Дано:</div>
+                <div class="space-y-10">
+                    <div class="step" id="s1">$I = 1,2 \text{ А}$</div>
+                    <div class="step" id="s2">$U = 18 \text{ В}$</div>
+                    <div class="h-line-dano step" id="s3">
+                        <div>$R - ?$</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- КОЛОНКА 2: РОЗВ'ЯЗАННЯ -->
+            <div class="cell v-line" style="width: 40%;">
+                <div class="header-cell text-center">Розв'язання</div>
+                <div class="formula-list">
+                    <div class="step" id="s4">
+                        $$ R = \frac{U}{I} $$
+                    </div>
+                </div>
+            </div>
+
+            <!-- КОЛОНКА 3: ОБЧИСЛЕННЯ -->
+            <div class="cell" style="width: 35%;">
+                <div class="header-cell"></div>
+                <div class="formula-list">
+                    <div class="step" id="s5">
+                        $$ [R] = \frac{\text{В}}{\text{А}} = \text{Ом} $$
+                    </div>
+                    <div class="step" id="s6">
+                        $$ R = \frac{18}{1,2} = 15 \text{ (Ом)} $$
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ВІДПОВІДЬ -->
+    <div class="step answer-box" id="s7">
+        Відповідь: $R = 15 \text{ Ом.}$
+    </div>
+
+    <!-- КНОПКИ НАВІГАЦІЇ -->
+    <div id="prev-arrow" class="nav-arrow" style="visibility: hidden;">
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </div>
+    <div id="next-arrow" class="nav-arrow">
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </div>
+
+    <script>
+        window.onload = function() {
+            let currentStep = 0;
+            const stepsIds = ["s1", "s2", "s3", "s4", "s5", "s6", "s7"];
+            const nextBtn = document.getElementById('next-arrow');
+            const prevBtn = document.getElementById('prev-arrow');
+
+            function updateUI() {
+                stepsIds.forEach((id, index) => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        if (index < currentStep) {
+                            el.classList.add('visible');
+                        } else {
+                            el.classList.remove('visible');
+                        }
+                    }
+                });
+                if (window.MathJax) MathJax.typeset();
+                
+                prevBtn.style.visibility = (currentStep === 0) ? 'hidden' : 'visible';
+                nextBtn.style.visibility = (currentStep === stepsIds.length) ? 'hidden' : 'visible';
+            }
+
+            nextBtn.onclick = () => { 
+                if (currentStep < stepsIds.length) { 
+                    currentStep++; 
+                    updateUI(); 
+                } 
+            };
+            
+            prevBtn.onclick = () => { 
+                if (currentStep > 0) { 
+                    currentStep--; 
+                    updateUI(); 
+                } 
+            };
+            
+            document.onkeydown = (e) => {
+                if (e.key === "ArrowRight" || e.key === " ") nextBtn.click();
+                else if (e.key === "ArrowLeft") prevBtn.click();
+            };
+            
+            updateUI();
+        };
+    </script>
+</body>
+</html>
